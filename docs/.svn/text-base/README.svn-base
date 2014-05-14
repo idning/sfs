@@ -1,0 +1,5 @@
+osd 接口:
+
+curl localhost:6006/put/2 -d"abcxxx"
+curl localhost:6006/get/2
+

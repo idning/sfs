@@ -1,0 +1,166 @@
+struct ping {
+	int version                         = 1;
+	string self_ip                      = 2;
+	int self_port                       = 3; 
+	int self_type                       = 4; 
+	int mid                             = 5;
+	int load                       = 6; 
+}
+
+struct machine {
+    int mid                             = 1;
+    string ip                           = 2;
+    int port                            = 3;
+    int type                            = 4;
+	int load                       = 6; 
+}
+
+
+struct pong {
+	int version                         = 1;
+	optional int mid                    = 2;
+    array struct[machine] machines      = 3;
+}
+
+struct file_stat {
+    int64   ino                         = 1;
+    int64   size                        = 2;
+    optional int   type                 = 3;
+    optional string name                = 4;
+    optional int   mode                 = 5;
+    optional int   nlink                = 6;
+    optional int   atime                = 7;
+    optional int   mtime                = 8;
+    optional int   ctime                = 9;
+    array int pos_arr                   = 10;
+    optional int64 parent_ino           = 11;
+    optional int version                = 12; //for client , is the current cluster version when add into cache
+}
+
+struct stat_request {
+    array int64 ino_arr                 = 1;
+}
+
+struct stat_response {
+    int rst_code                        = 1;
+    array struct[file_stat] stat_arr    = 2;
+}
+
+
+struct setattr_request {
+    array struct[file_stat] stat_arr    = 1;
+}
+
+struct setattr_response {
+    int rst_code                        = 1;
+    array struct[file_stat] stat_arr    = 2;
+}
+
+struct ls_request {
+    array int64 ino_arr                 = 1;
+}
+
+struct ls_response {
+    int rst_code                        = 1;
+    array struct[file_stat] stat_arr    = 2;
+}
+
+/*create & mkdir*/
+struct mknod_request {
+    int64 parent_ino                    = 1;
+    int64 ino                           = 2;
+    string name                         = 3;
+    int type                            = 4;
+    optional int mode                   = 5;
+}
+
+struct mknod_response {
+    int rst_code                        = 2;
+    array struct[file_stat] stat_arr    = 1;
+}
+
+
+struct symlink_request {
+    int64 parent_ino                    = 1;
+    int64 ino                           = 2;
+    string name                         = 3;
+    string path                         = 4;
+}
+
+struct symlink_response {
+    int rst_code                        = 1;
+    struct[file_stat] stat              = 2;
+}
+
+struct readlink_request {
+    int64 ino                           = 1;
+}
+
+struct readlink_response {
+    int rst_code                        = 1;
+    string path                         = 2;
+}
+
+struct lookup_request {
+    int64 parent_ino                    = 1;
+    string name                         = 2;
+}
+
+struct lookup_response {
+    int rst_code                        = 1;
+    array struct[file_stat] stat_arr    = 2;
+}
+
+
+struct unlink_request {
+    int64 parent_ino                    = 1;
+    string name                         = 2;
+}
+
+struct unlink_response {
+    int rst_code                        = 1;
+    optional int64 ino                  = 2;
+}
+
+
+struct statfs_request {
+    optional int nothing                = 1;
+}
+
+struct statfs_response {
+    int total_space                     = 1;
+    int avail_space                     = 2;
+    int inode_cnt                       = 3;
+}
+/************       mkfs    ***************/
+struct mkfs_request {
+    array int pos_arr                   = 1;
+}
+
+struct mkfs_response {
+    optional int rst                    = 1;
+}
+
+
+/************       uuid ***************/
+struct uuid_request {
+    int count                           = 1;
+}
+
+struct uuid_response {  /*return range [min, max)  */
+    int64 range_min                     = 1;
+    int64 range_max                     = 2;
+}
+/************       migrate ***************/
+struct migrate_request {
+    int from_mds                        = 1;
+    int to_mds                          = 2;
+    array struct[file_stat] stat_arr    = 3;
+    int op                              = 4; //migrate(1)  | change_pos(2)
+}
+struct migrate_response {
+    int rst                             = 1;
+}
+
+
+

@@ -1,0 +1,29 @@
+--2011-01-04--
+今天弄懂了 auto tools的用法.
+但是我用了scons
+
+
+--2011-01-04--
+
+const int LOG_DEUBG = 1;
+const int LOG_INFO = 2;
+const int LOG_WARN = 3;
+const int LOG_ERROR = 4;
+用在switch里面会有:
+error: case label does not reduce to an integer constant
+
+所以，我用#define
+
+--2011-01-06--
+设计一个系统，从network, log基础库，
+到event库，
+再设计协议.
+
+--2011-01-07--
+ 
+   #TO DO:要改变量名 protocol_c_test_file
+
+--2011-01-07--
+打算用evhttp做一个osd的接口，方便.
+发现libevent有一个不错的buffer类，也有event_rpcgen.py，都是等我写过了，才发现别人也写过，悲催哟.
+
